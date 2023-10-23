@@ -18,8 +18,12 @@
   height: 128px;
 }
 
+.profile-content {
+  font-size: 10px;
+}
+
 .profile-card:nth-child(3n + 2) {
-  border: orange;
+  border: 7px solid orange;
 }
 
 .pagination {
