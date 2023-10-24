@@ -5,7 +5,6 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import "./App.css";
 import {
   QueryClient,
   QueryClientProvider,
