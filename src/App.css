@@ -1,4 +1,4 @@
-.App {
+/* .App {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
 }
 
 .profile-card {
-  transition: transform 0s !important; /* Disable the transition */
+  transition: transform 0s !important; 
   border: 7px solid turquoise;
   text-align: center;
   transition: all 0.8s;
@@ -28,4 +28,4 @@
 
 .pagination {
   margin-top: 20px;
-}
+} */

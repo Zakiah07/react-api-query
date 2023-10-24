@@ -1,12 +1,8 @@
 import {
   CircularProgress,
-  FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  Pagination,
-  Paper,
-  Select,
   Typography,
 } from "@mui/material";
 import "./App.css";
@@ -17,6 +13,15 @@ import {
 } from "@tanstack/react-query";
 import { fetchProfiles } from "./api";
 import { useState } from "react";
+import {
+  Container,
+  FormControlStyled,
+  StyledGrid,
+  StyledPagination,
+  StyledPaper,
+  StyledSelect,
+  StyledTypography,
+} from "./styles";
 
 export const queryClient = new QueryClient();
 
@@ -30,7 +35,6 @@ function App() {
 
 function ProfileList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [isHovered, setIsHovered] = useState(null);
   const [username, setUsername] = useState("");
   const [filteredProfile, setFilteredProfile] = useState([]);
   const [selectedOption, setSelectedOption] = useState("All");
@@ -62,14 +66,6 @@ function ProfileList() {
   const totalPages = data.total_pages;
   // console.log(totalPages);
 
-  const handleMouseOver = (item) => {
-    setIsHovered(item);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(null);
-  };
-
   const filteredUsers = data.data.filter((user) => {
     const fullName = `${user.first_name} ${user.last_name}`;
     return fullName.toLowerCase().includes(username.toLowerCase());
@@ -91,11 +87,11 @@ function ProfileList() {
   // console.log("user", displayUsers);
 
   return (
-    <div className="App">
-      <Typography variant="h4">Users List</Typography>
-      <FormControl>
+    <Container>
+      <Typography variant="h4">User Profile List</Typography>
+      <FormControlStyled>
         <InputLabel id="username-selection">Find User</InputLabel>
-        <Select
+        <StyledSelect
           className="input-selection"
           labelId="username-selection"
           id="username-selection"
@@ -114,8 +110,8 @@ function ProfileList() {
               </MenuItem>
             );
           })}
-        </Select>
-      </FormControl>
+        </StyledSelect>
+      </FormControlStyled>
       <Grid
         className="container"
         container
@@ -123,42 +119,37 @@ function ProfileList() {
       >
         {displayUsers.map((item) => {
           return (
-            <Grid
+            <StyledGrid
               item
               xs={12}
               sm={6}
               md={4}
               key={item.id}
             >
-              <Paper
-                variant="outlined primary"
+              <StyledPaper
+                variant="outlined"
                 key={item.id}
-                onMouseOver={() => handleMouseOver(item)}
-                onMouseLeave={handleMouseLeave}
                 className="profile-card"
               >
-                {isHovered === item ? (
-                  <div className="profile-content">
-                    <Typography>ID: {item.id}</Typography>
-                    <Typography variant="h6">
-                      {item.first_name} {item.last_name}
-                    </Typography>
-                    <Typography variant="subtitle2">{item.email}</Typography>
-                  </div>
-                ) : (
-                  <img
-                    src={item.avatar}
-                    alt={item.first_name}
-                  />
-                )}
-              </Paper>
-            </Grid>
+                <div className="profile-content">
+                  <Typography>ID: {item.id}</Typography>
+                  <Typography variant="h6">
+                    {item.first_name} {item.last_name}
+                  </Typography>
+                  <StyledTypography>{item.email}</StyledTypography>
+                </div>
+                <img
+                  src={item.avatar}
+                  alt={item.first_name}
+                />
+              </StyledPaper>
+            </StyledGrid>
           );
         })}
       </Grid>
 
       {totalPages > 1 && displayUsers.length >= 6 && (
-        <Pagination
+        <StyledPagination
           count={totalPages}
           page={currentPage}
           onChange={handlePagination}
@@ -167,7 +158,7 @@ function ProfileList() {
           className="pagination"
         />
       )}
-    </div>
+    </Container>
   );
 }
 
